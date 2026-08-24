@@ -100,7 +100,7 @@ bank.push(...[
 [4,"身近な場面","標準","気温が高い日ほど、アイスの売上と熱中症搬送者数の両方が増えた。この結果から直接は言えないことは？",["アイスの売上増加が熱中症の原因である","二つの値に同じ方向へ変化する傾向がある","気温が第三の要因かもしれない","因果関係は追加の検討が必要である"],0,"一緒に増える相関は見られても、アイスの売上が熱中症を引き起こすとは言えない。気温という第三の要因を検討する必要がある。"]
 ].map(q=>({id:q[0]+":"+q[3],round:q[0],field:q[1],level:q[2],text:q[3],choices:q[4],answer:q[5],explain:q[6]})));
 let selected=[],pos=0,correct=0,wrong=[],lastConfig=null,repeatSource=null,locked=false,lastQuestionOrder='';const lastChoiceOrders=new Map(),$=id=>document.getElementById(id);
-function escHtml(s){return String(s).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]))}
+function escHtml(s){const el=document.createElement('div');el.textContent=String(s);return el.innerHTML}
 function termSupport(q){const name=q.choices[q.answer],term=(window.INFO_TERMS||[]).find(x=>x[1]===name),extra=(window.INFO_TERM_CONTEXT||{})[name];if(!term||!extra)return '';return '<div class=\"learning-support\"><div class=\"learning-example\"><b>身近な例</b>'+escHtml(extra[0])+'</div><div class=\"learning-analogy\"><b>たとえるなら</b>'+escHtml(extra[1])+'</div></div>'}
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function freshQuestionOrder(list){let order=shuffle(list),signature=order.map(q=>q.id).join('\u001f');if(order.length>1&&signature===lastQuestionOrder){order=[...order.slice(1),order[0]];signature=order.map(q=>q.id).join('\u001f')}lastQuestionOrder=signature;return order}
