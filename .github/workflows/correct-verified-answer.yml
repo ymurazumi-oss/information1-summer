@@ -1,0 +1,57 @@
+name: Correct verified answer and deploy
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  correct-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Correct the verified answer only
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'info.html';
+          let source = fs.readFileSync(file, 'utf8');
+          const oldAnswer = '<tr><td class="sym">ト</td><td class="ans">④（100人）</td><td>100通りを送り分ければ、少なくとも一人は2回とも当たる。</td></tr>';
+          const newAnswer = '<tr><td class="sym">ト</td><td class="ans">⑦（1000人）</td><td>末尾1桁の10通りと末尾2桁の100通りを組み合わせるため、10×100＝1000通り。</td></tr>';
+          let changed = 0;
+          source = source.replace(/"data":"([A-Za-z0-9+/=]+)"/g, (whole, encoded) => {
+            let decoded = Buffer.from(encoded, 'base64').toString('utf8');
+            if (!decoded.includes(oldAnswer)) return whole;
+            if (decoded.split(oldAnswer).length !== 2) throw new Error('The target answer is not unique');
+            decoded = decoded.replace(oldAnswer, newAnswer);
+            changed++;
+            return '"data":"' + Buffer.from(decoded, 'utf8').toString('base64') + '"';
+          });
+          if (changed !== 1) throw new Error('Expected exactly one corrected embedded resource; found ' + changed);
+          fs.writeFileSync(file, source);
+          NODE
+      - name: Remove this one-time workflow
+        run: rm .github/workflows/correct-verified-answer.yml
+      - name: Commit correction
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add info.html .github/workflows/correct-verified-answer.yml
+          git commit -m "Correct spam-mail answer to 1000 recipients"
+          git push
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
