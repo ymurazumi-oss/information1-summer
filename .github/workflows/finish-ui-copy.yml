@@ -22,9 +22,9 @@ jobs:
       - name: Make the usage note visible on every device
         run: |
           for file in programming.html info.html; do
-            perl -0pi -e 's#<button class="action" id="openBtn" title="印刷・全画面表示用">教材だけを開く</button>#<button class="action" id="openBtn">教材だけを開く<br><small style="display:block;font-size:10px;font-weight:600;color:#667085">印刷・全画面表示用</small></button>#g' "$file"
+            perl -0pi -e 's~<button class="action" id="openBtn" title="印刷・全画面表示用">教材だけを開く</button>~<button class="action" id="openBtn">教材だけを開く<br><small style="display:block;font-size:10px;font-weight:600;color:#667085">印刷・全画面表示用</small></button>~g' "$file"
           done
-          test "$(grep -l '<small style="display:block;font-size:10px;font-weight:600;color:#667085">印刷・全画面表示用</small>' programming.html info.html | wc -l)" -eq 2
+          test "$(grep -l '印刷・全画面表示用</small>' programming.html info.html | wc -l)" -eq 2
       - name: Remove this one-time workflow
         run: rm .github/workflows/finish-ui-copy.yml
       - name: Commit the approved changes
