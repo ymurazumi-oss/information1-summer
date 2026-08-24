@@ -1,0 +1,57 @@
+name: Restore complete course pages
+
+on:
+  push:
+    paths:
+      - .github/workflows/restore-complete-pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  restore-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+
+      - name: Download complete pages from original repository
+        run: |
+          curl --fail --location --retry 3 \
+            https://raw.githubusercontent.com/ymurazumi-oss/dncl-lab/main/programming.html \
+            --output programming.html
+          curl --fail --location --retry 3 \
+            https://raw.githubusercontent.com/ymurazumi-oss/dncl-lab/main/info.html \
+            --output info.html
+
+      - name: Verify exact Git blob hashes
+        run: |
+          test "$(git hash-object programming.html)" = "b1cde639d8f2b33dd4b7a11a3e3045329640f2b9"
+          test "$(git hash-object info.html)" = "5bf6d9646424971f625039253a6b9ab7f1a6f37b"
+
+      - name: Commit restored files and remove one-time workflow
+        run: |
+          rm .github/workflows/restore-complete-pages.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add programming.html info.html .github/workflows/restore-complete-pages.yml
+          git commit -m "Restore complete course pages"
+          git push
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload complete site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy complete site
+        id: deployment
+        uses: actions/deploy-pages@v4
