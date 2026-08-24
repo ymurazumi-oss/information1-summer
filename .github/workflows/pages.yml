@@ -1,3 +1,4 @@
+# Static course portal deployment
 name: Deploy GitHub Pages
 
 on:
