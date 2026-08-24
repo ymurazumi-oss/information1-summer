@@ -1,5 +1,9 @@
 name: Correct verified answer and deploy
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/correct-verified-answer.yml
   workflow_dispatch:
 
 permissions:
