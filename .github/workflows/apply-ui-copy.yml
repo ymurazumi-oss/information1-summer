@@ -1,0 +1,33 @@
+name: Apply approved UI copy changes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-ui-copy.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update the two navigation labels
+        run: |
+          for file in programming.html info.html; do
+            perl -0pi -e 's#<span class="home-label">教材一覧</span><span class="home-label-short">一覧</span>#<span class="home-label">分野選択へ戻る</span><span class="home-label-short">戻る</span>#g' "$file"
+            perl -0pi -e 's#<button class="action" id="openBtn">新しいタブで開く</button>#<button class="action" id="openBtn" title="印刷・全画面表示用">教材だけを開く</button>#g' "$file"
+          done
+          test "$(grep -l '分野選択へ戻る' programming.html info.html | wc -l)" -eq 2
+          test "$(grep -l '教材だけを開く' programming.html info.html | wc -l)" -eq 2
+      - name: Remove this one-time workflow
+        run: rm .github/workflows/apply-ui-copy.yml
+      - name: Commit the approved changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add programming.html info.html .github/workflows/apply-ui-copy.yml
+          git commit -m "Clarify portal navigation labels"
+          git push
