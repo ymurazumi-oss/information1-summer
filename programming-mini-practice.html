@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>プログラミング ミニ演習</title>
+<style>
+:root{--navy:#182b4d;--blue:#287bb5;--green:#1e795e;--red:#b23a3a;--ink:#172033;--muted:#647089;--line:#d9e1ec;--paper:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}.top{padding:20px 24px;background:var(--navy);color:#fff}.top h1{margin:0 0 4px;font-size:23px}.top p{margin:0;color:#d8e1ef;font-size:13px}.wrap{max-width:820px;margin:22px auto;padding:0 16px}.status{display:flex;align-items:center;gap:12px;margin-bottom:12px}.bar{height:8px;flex:1;overflow:hidden;border-radius:999px;background:#dce4ee}.bar span{display:block;height:100%;background:var(--blue);transition:width .25s}.progress{font-size:13px;font-weight:800;white-space:nowrap}.card{padding:22px;border:1px solid var(--line);border-radius:15px;background:#fff;box-shadow:0 5px 18px #2538580c}.meta{display:flex;justify-content:space-between;gap:8px;margin-bottom:13px}.tag{padding:4px 8px;border-radius:999px;background:#e8f4ef;color:#176247;font-size:11px;font-weight:800}.level{color:var(--muted);font-size:12px}.question{margin:0 0 14px;font-size:18px;line-height:1.65}.code{margin:12px 0 18px;padding:14px 16px;border-left:4px solid #70a9ce;border-radius:9px;background:#f0f5fa;font:15px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}.answer-row{display:flex;gap:9px}.answer{min-width:0;flex:1;padding:12px 13px;border:1px solid #b9c6d8;border-radius:9px;font-size:16px}.btn{border:0;border-radius:9px;background:var(--blue);color:#fff;padding:11px 18px;font-weight:800;cursor:pointer}.btn:disabled{opacity:.5;cursor:default}.feedback{display:none;margin-top:16px;padding:13px 15px;border-radius:9px;line-height:1.65}.feedback.ok{display:block;background:#eaf7f1;color:#155f47}.feedback.ng{display:block;background:#fff0ef;color:#842e2e}.related{display:block;margin-top:6px;font-size:12px}.next-row{display:none;justify-content:flex-end;margin-top:14px}.next-row.show{display:flex}.result{text-align:center}.score{margin:10px 0 4px;font-size:46px;font-weight:900;color:var(--navy)}.summary{margin:0 auto 20px;max-width:550px;color:#4d5870;line-height:1.7}.restart{background:var(--green)}.hint{margin-top:12px;color:var(--muted);font-size:12px}@media(max-width:560px){.top{padding:17px 16px}.card{padding:17px}.answer-row{display:grid}.btn{width:100%}.question{font-size:16px}.code{font-size:14px}}
+</style>
+</head>
+<body>
+<header class="top"><h1>プログラミング ミニ演習</h1><p>第1～4回の内容を、毎回変わる数値で10問確認</p></header>
+<main class="wrap"><div id="app"></div></main>
+<script>
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[R(0,a.length-1)];
+const sumTo=n=>n*(n+1)/2;
+function makeQuestions(){
+ const a=R(2,9),b=R(2,9),c=R(2,5),threshold=R(55,80),score=threshold+pick([-1,0,1,R(2,12)]);
+ const n=R(4,9),div=R(2,4),end=R(10,20),arr=Array.from({length:5},()=>R(1,19));
+ const start=R(1,3),outer=R(2,4),inner=R(2,5),fa=R(3,18),fb=R(3,18);
+ const oneBased=Math.random()<.5,index=oneBased?R(1,arr.length):R(0,arr.length-1),value=arr[oneBased?index-1:index];
+ const max=Math.max(...arr),maxIndex=arr.indexOf(max);
+ const divisible=Array.from({length:end},(_,i)=>i+1).filter(x=>x%div===0).reduce((s,x)=>s+x,0);
+ return [
+  {cat:'代入',q:'最後に表示される値を答えなさい。',code:`x = ${a}\nx = x + ${b}\n表示する(x)`,ans:a+b,ex:`最初の ${a} に ${b} を加えるので ${a+b}。`,term:'代入・更新',lesson:'第1回'},
+  {cat:'順次構造',q:'最後に表示される値を答えなさい。',code:`x = ${a}\nx = x * ${c}\nx = x - ${b}\n表示する(x)`,ans:a*c-b,ex:`上から順に、${a} → ${a*c} → ${a*c-b} と変化する。`,term:'順次構造・トレース',lesson:'第1回'},
+  {cat:'条件分岐',q:'表示される言葉を「合格」か「不合格」で答えなさい。',code:`tokuten = ${score}\nもし tokuten >= ${threshold} ならば:\n  表示する("合格")\nそうでなければ:\n  表示する("不合格")`,ans:score>=threshold?'合格':'不合格',ex:`${score} >= ${threshold} は${score>=threshold?'真':'偽'}なので「${score>=threshold?'合格':'不合格'}」。`,term:'条件式・境界値',lesson:'第1回'},
+  {cat:'反復',q:`1から${n}までの整数を合計した値を答えなさい。`,code:`goukei = 0\ni を 1 から ${n} まで 1 ずつ増やしながら繰り返す:\n  goukei = goukei + i\n表示する(goukei)`,ans:sumTo(n),ex:`1+2+…+${n} = ${sumTo(n)}。`,term:'反復構造・更新',lesson:'第1回'},
+  {cat:'条件＋反復',q:`1から${end}までの${div}の倍数だけを合計した値を答えなさい。`,code:`goukei = 0\ni を 1 から ${end} まで繰り返す:\n  もし i % ${div} == 0 ならば:\n    goukei = goukei + i`,ans:divisible,ex:`対象は ${Array.from({length:end},(_,i)=>i+1).filter(x=>x%div===0).join('、')}。合計は ${divisible}。`,term:'剰余・条件分岐・反復',lesson:'第1回'},
+  {cat:'配列',q:`この問題では添字は${oneBased?'1':'0'}から始まります。Data[${index}] の値を答えなさい。`,code:`Data = [${arr.join(', ')}]`,ans:value,ex:`添字が${oneBased?'1':'0'}始まりなので、Data[${index}] は左から${oneBased?index:index+1}番目の ${value}。`,term:'配列・要素・添字',lesson:'第2回'},
+  {cat:'最大値探索',q:'最後の saidai の値を答えなさい。',code:`Data = [${arr.join(', ')}]\nsaidai = Data[0]\ni を 1 から 4 まで繰り返す:\n  もし Data[i] > saidai ならば:\n    saidai = Data[i]`,ans:max,ex:`値を順に比較すると最大値は ${max}。`,term:'最大値探索・初期化',lesson:'第3回'},
+  {cat:'最大値の位置',q:'最後の ichi の値を答えなさい（添字は0から）。',code:`Data = [${arr.join(', ')}]\nsaidai = Data[0]\nichi = 0\ni を 1 から 4 まで繰り返す:\n  もし Data[i] > saidai ならば:\n    saidai = Data[i]\n    ichi = i`,ans:maxIndex,ex:`最大値 ${max} が最初に現れる添字は ${maxIndex}。条件が > なので同じ値では更新しない。`,term:'添字・同値の扱い',lesson:'第3回'},
+  {cat:'関数',q:'x の値を答えなさい。最大値(a,b) は大きい方の値を返します。',code:`x = 最大値(${fa}, ${fb})`,ans:Math.max(fa,fb),ex:`関数へ渡した ${fa} と ${fb} の大きい方は ${Math.max(fa,fb)}。`,term:'関数・引数・戻り値',lesson:'第3回'},
+  {cat:'二重ループ',q:'「●」は全部で何回表示されますか。',code:`k を ${start} から ${start+outer-1} まで繰り返す:\n  i を 1 から ${inner} まで繰り返す:\n    表示する("●")`,ans:outer*inner,ex:`外側は ${outer} 回、各回で内側が ${inner} 回なので ${outer}×${inner}=${outer*inner} 回。`,term:'二重ループ',lesson:'第4回'}
+ ];
+}
+let questions=[],pos=0,score=0,answered=false,missed=[];
+const app=document.getElementById('app');
+const norm=s=>String(s).trim().replace(/[０-９]/g,d=>String.fromCharCode(d.charCodeAt(0)-65248));
+function start(){questions=makeQuestions();pos=0;score=0;answered=false;missed=[];render()}
+function render(){const q=questions[pos];app.innerHTML=`<div class="status"><div class="bar"><span style="width:${pos/10*100}%"></span></div><div class="progress">${pos+1} / 10</div></div><section class="card"><div class="meta"><span class="tag">${q.cat}</span><span class="level">夏期講習 ${q.lesson}</span></div><h2 class="question">${q.q}</h2><div class="code">${q.code}</div><div class="answer-row"><input id="answer" class="answer" inputmode="text" autocomplete="off" placeholder="答えを入力"><button id="check" class="btn">答え合わせ</button></div><div id="feedback" class="feedback"></div><div id="nextRow" class="next-row"><button id="next" class="btn">${pos===9?'結果を見る':'次の問題'}</button></div><div class="hint">Enterキーでも答え合わせ・次の問題へ進めます。</div></section>`;const input=document.getElementById('answer');input.focus();document.getElementById('check').onclick=check;document.getElementById('next').onclick=next;input.onkeydown=e=>{if(e.key==='Enter')answered?next():check()}}
+function check(){if(answered)return;const q=questions[pos],input=document.getElementById('answer'),given=norm(input.value);if(!given)return input.focus();answered=true;const ok=given===norm(q.ans);if(ok)score++;else missed.push(q.term);input.disabled=true;document.getElementById('check').disabled=true;const f=document.getElementById('feedback');f.className=`feedback ${ok?'ok':'ng'}`;f.innerHTML=`<b>${ok?'正解！':'正解は「'+q.ans+'」'}</b><br>${q.ex}${ok?'':`<span class="related">確認する用語：${q.term} ／ 夏期講習 ${q.lesson}</span>`}`;document.getElementById('nextRow').classList.add('show')}
+function next(){if(!answered)return check();if(pos<9){pos++;answered=false;render()}else result()}
+function result(){const unique=[...new Set(missed)];app.innerHTML=`<section class="card result"><span class="tag">演習完了</span><div class="score">${score} / 10</div><p class="summary">${score===10?'全問正解です。数値が変わっても処理を正しく追えています。':score>=7?'基本はつかめています。間違えた問題の処理をもう一度追ってみましょう。':'答えだけでなく、各行の実行直後の値を書きながら復習しましょう。'}${unique.length?`<br><b>確認したい用語：</b>${unique.join('、')}`:''}</p><button id="restart" class="btn restart">別の数値でもう一度</button></section>`;document.getElementById('restart').onclick=start}
+start();
+</script>
+</body>
+</html>
