@@ -16,16 +16,16 @@
 <body>
   <header class="top"><div class="brand"><div class="mark">Ⅰ</div><div><strong>情報Ⅰ 共通テスト演習</strong><small>Common Test Practice</small></div></div><div class="status">COURSE ACCESS</div></header>
   <main class="wrap">
-    <section class="heading"><div><div class="eyebrow">COURSE INDEX</div><h1>教材一覧</h1><p>受講する分野のアクセスコードを入力してください。</p></div><div class="note">教材一覧へ戻るとアクセス状態は解除されます。分野を開く際に、アクセスコードを再入力してください。</div></section>
+    <section class="heading"><div><div class="eyebrow">COURSE INDEX</div><h1>教材一覧</h1><p>受講する分野の合言葉を入力してください。</p></div><div class="note">教材一覧へ戻るとアクセス状態は解除されます。分野を開く際に、合言葉を再入力してください。</div></section>
     <section class="cards">
-      <article class="card" id="programCard" style="--accent:var(--blue)"><div class="section-no">01 / PROGRAMMING</div><h2>プログラミング</h2><div class="scope">DNCL・アルゴリズム・配列・探索</div><div class="contents"><span>演習問題</span><span>DNCL実行環境</span><span>解答・解説</span></div><div class="access"><input id="programInput" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ACCESS CODE" aria-label="プログラミングのアクセスコード"><button data-course="program">開く</button></div><div class="message" aria-live="polite"></div></article>
-      <article class="card" id="infoCard" style="--accent:var(--teal)"><div class="section-no">02 / GENERAL TOPICS</div><h2>情報Ⅰ 基礎・データ活用</h2><div class="scope">情報デザイン・ネットワーク・データ分析</div><div class="contents"><span>用語一覧</span><span>演習問題</span><span>知識確認</span><span>解答・解説</span></div><div class="access"><input id="infoInput" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ACCESS CODE" aria-label="情報Ⅰ 基礎・データ活用のアクセスコード"><button data-course="info">開く</button></div><div class="message" aria-live="polite"></div></article>
+      <article class="card" id="programCard" style="--accent:var(--blue)"><div class="section-no">01 / PROGRAMMING</div><h2>プログラミング</h2><div class="scope">DNCL・アルゴリズム・配列・探索</div><div class="contents"><span>演習問題</span><span>DNCL実行環境</span><span>解答・解説</span></div><div class="access"><input id="programInput" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="合言葉を入力" aria-label="プログラミングの合言葉"><button data-course="program">開く</button></div><div class="message" aria-live="polite"></div></article>
+      <article class="card" id="infoCard" style="--accent:var(--teal)"><div class="section-no">02 / GENERAL TOPICS</div><h2>情報Ⅰ 基礎・データ活用</h2><div class="scope">情報デザイン・ネットワーク・データ分析</div><div class="contents"><span>用語一覧</span><span>演習問題</span><span>知識確認</span><span>解答・解説</span></div><div class="access"><input id="infoInput" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="合言葉を入力" aria-label="情報Ⅰ 基礎・データ活用の合言葉"><button data-course="info">開く</button></div><div class="message" aria-live="polite"></div></article>
     </section>
     <div class="foot"><span>横浜女学院中学校高等学校</span><span>情報Ⅰ 夏期講習｜共通テスト対策</span></div>
   </main>
   <script>
     const courses={program:{word:'DNCL',href:'programming.html',card:'programCard',input:'programInput'},info:{word:'INFO',href:'info.html',card:'infoCard',input:'infoInput'}};
-    function enter(key){const c=courses[key],card=document.getElementById(c.card),input=document.getElementById(c.input),msg=card.querySelector('.message');if(input.value.trim().toUpperCase()===c.word){location.href=c.href;return}msg.textContent='アクセスコードを確認してください。';card.classList.remove('error');void card.offsetWidth;card.classList.add('error');input.select()}
+    function enter(key){const c=courses[key],card=document.getElementById(c.card),input=document.getElementById(c.input),msg=card.querySelector('.message');if(input.value.trim().toUpperCase()===c.word){location.href=c.href;return}msg.textContent='合言葉を確認してください。';card.classList.remove('error');void card.offsetWidth;card.classList.add('error');input.select()}
     document.querySelectorAll('[data-course]').forEach(button=>button.addEventListener('click',()=>enter(button.dataset.course)));
     document.querySelectorAll('.access input').forEach(input=>input.addEventListener('keydown',event=>{if(event.key==='Enter')enter(input.id.startsWith('program')?'program':'info')}));
   </script>
