@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報Ⅰ 冬期講習</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div><p>高校1・2年　冬期講習</p><h1>情報Ⅰ</h1><p>前半は資料や条件を読む。後半はプログラムを1行ずつ追う。</p></div></header>
+<main>
+<p class="note">高1・高2対象／90分×4回。答えを開く前に、自分の予想と理由をノートに書こう。</p>
+<nav id="lessons" aria-label="授業を選ぶ">
+<a href="#lesson1">1　表とグラフ</a><a href="#lesson2">2　通信の条件</a><a href="#lesson3">3　分岐と繰り返し</a><a href="#lesson4">4　配列と最大値</a>
+</nav>
+<section id="lesson1">
+<p class="number">第1回　基礎・データ活用</p>
+<h2>どの数字を見て、そう言える？</h2>
+<p>下の表は、体験講座の参加者とアンケートの回答数をまとめたものです。数値は練習用です。</p>
+<div class="task">
+<h3>基本問題　人数と割合を比べる</h3>
+<table><caption>体験講座のアンケート</caption><thead><tr><th scope="col">講座</th><th scope="col">参加者</th><th scope="col">回答者</th><th scope="col">「また参加したい」と答えた人数</th></tr></thead>
+<tbody><tr><th scope="row">A</th><td>40人</td><td>30人</td><td>24人</td></tr><tr><th scope="row">B</th><td>30人</td><td>20人</td><td>18人</td></tr><tr><th scope="row">C</th><td>20人</td><td>20人</td><td>16人</td></tr></tbody></table>
+<ol><li>「また参加したい」と答えた人数が最も多いのはどの講座？</li><li>回答者に占める「また参加したい」の割合が最も高いのは？ どの数字で割ったかも書こう。</li><li>友達が「参加者全体で見てもBが一番だね」と言った。表の数字を使って返事をしよう。</li></ol>
+<details><summary>答えと考え方</summary><p>1．Aの24人。2．Bの18÷20＝90％。AとCは80％。3．参加者全体のうち「そう答えた」割合なら、Aは60％、Bは60％、Cは80％。未回答の人がどう思っていたかは、この表からは分からない。</p></details>
+</div>
+<div class="task">
+<h3>挑戦問題　グラフからどこまで言える？</h3>
+<p>体験講座を開いた6日間について、その日の気温と冷たい飲み物の販売数を記録した。</p>
+<svg class="chart" viewBox="0 0 440 240" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">気温と冷たい飲み物の販売数</title><desc id="chart-desc">気温と販売数の組は、20度と16本、22度と24本、24度と20本、26度と36本、28度と32本、30度と48本。</desc>
+<path d="M65 28V188H380 M65 108H380 M65 28H380 M84 188v6 M224 188v6 M364 188v6" fill="none" stroke="#9aabb8"/>
+<g fill="#172638" font-size="13"><text x="65" y="17">販売数（本）</text><text x="43" y="193">0</text><text x="40" y="112">25</text><text x="40" y="32">50</text><text x="76" y="210">20</text><text x="216" y="210">25</text><text x="356" y="210">30</text><text x="291" y="233">気温（℃）</text></g>
+<g fill="#1d536c"><circle cx="84" cy="137" r="5"/><circle cx="140" cy="111" r="5"/><circle cx="196" cy="124" r="5"/><circle cx="252" cy="73" r="5"/><circle cx="308" cy="86" r="5"/><circle cx="364" cy="34" r="5"/></g>
+</svg>
+<ol><li>「気温が高い日はよく売れる傾向がある」と「気温が高い日は必ず多く売れる」のうち、グラフに合うのはどちら？</li><li>売れた理由まで確かめるなら、気温と販売数のほかに何を記録する？</li></ol>
+<details><summary>答えと考え方</summary><p>1．前者。全体では右上がりの傾向だが、22℃より24℃の日の方が販売数は少ない。2．たとえば来場者数。来場者が多い日ほど売れやすいと考えられるので、販売数だけでなく来場者100人当たりの販売数も比べられる。</p></details>
+</div>
+<p class="lesson-back"><a href="#lessons">授業一覧へ戻る</a></p>
+</section>
+<section id="lesson2">
+<p class="number">第2回　基礎・データ活用</p>
+<h2>この条件なら、どの送り方？</h2>
+<p>データを送るときは、サイズと時間の単位をそろえる。最後に、計算以外の条件も見直そう。</p>
+<div class="task">
+<h3>基本問題　校内発表の動画を送る</h3>
+<p>締切まで90秒。回線は毎秒8メガビット（8 Mb/s）で一定とする。準備時間も含めて90秒以内に送り終えたい。映像内の文字が読めることも必要。1 MB＝8 Mbとし、表にない時間は考えない。</p>
+<table><caption>送信するファイルの候補</caption><thead><tr><th scope="col">候補</th><th scope="col">サイズ</th><th scope="col">準備時間</th><th scope="col">映像内の文字</th></tr></thead>
+<tbody><tr><th scope="row">A　元の動画</th><td>120 MB</td><td>0秒</td><td>読める</td></tr><tr><th scope="row">B　圧縮版</th><td>60 MB</td><td>20秒</td><td>読める</td></tr><tr><th scope="row">C　強く圧縮した版</th><td>36 MB</td><td>10秒</td><td>読めない</td></tr></tbody></table>
+<ol><li>それぞれ送信に何秒かかる？ 準備も含めた時間を書こう。</li><li>どれを送る？ 選ばなかった二つについても理由を書こう。</li><li>すでにBの圧縮が終わっていて、残り時間が70秒なら、Bを送り終えられる？</li></ol>
+<details><summary>答えと考え方</summary><p>1．8 Mb/sは1 MB/sなので、送信だけならAは120秒、Bは60秒、Cは36秒。準備込みでは120秒、80秒、46秒。2．B。Aは90秒を超え、Cは文字が読めない。3．送信だけで60秒なので間に合う。</p></details>
+</div>
+<div class="task">
+<h3>挑戦問題　途中で回線が遅くなる</h3>
+<p>Bの準備は20秒。送信を始めてから最初の30秒は8 Mb/s、その後は4 Mb/sだった。締切まで90秒あるとき、この回線で間に合う？ 残りを送るには、後半に最低何 Mb/s必要？</p>
+<details><summary>答えと考え方</summary><p>最初の30秒で30 MB送れる。残り30 MBを4 Mb/s（0.5 MB/s）で送ると60秒かかり、準備から合計110秒。残り時間は90−20−30＝40秒なので、必要な速度は240 Mb÷40秒＝6 Mb/s。</p></details>
+</div>
+<div class="task">
+<h3>早く終わったら　元の動画を送りたい</h3>
+<p>Aの元の動画（120 MB）を圧縮せず、90秒以内に送りたい。回線は最低何 Mb/s 必要？ 小数第1位までの速度から選ぶとしたら、いくつにする？</p>
+<details><summary>答えと考え方</summary><p>120×8÷90＝32/3 Mb/s（約10.67 Mb/s）。小数第1位までなら10.7 Mb/s。10.6 Mb/sでは90秒以内に送り終わらない。</p></details>
+</div>
+<p class="lesson-back"><a href="#lessons">授業一覧へ戻る</a></p>
+</section>
+<section id="lesson3">
+<p class="number">第3回　プログラミング</p>
+<h2>次の1行で、値はどう変わる？</h2>
+<p>最初は手で追う。予想を書いてから、ラボの「ステップ実行」を1回ずつ押そう。ラボを開いたら、画面上の「問題に戻る」でこの問題に戻れます。</p>
+<div class="task" id="task-pass">
+<h3>ウォームアップ　境目の点数</h3>
+<p>60点以上を合格にする。59点、60点、61点で何が表示される？ ラボで点数を変えて確かめよう。</p>
+<a class="button" href="lab.html#pass">ラボを開く　合否判定</a>
+<details><summary>答えと考え方</summary><p>59点は不合格、60点と61点は合格。「以上」には60点を含む。</p></details>
+</div>
+<div class="task" id="task-sum">
+<h3>基本問題　1から5まで足す</h3>
+<pre><code>goukei = 0
+i を 1 から 5 まで 1 ずつ増やしながら繰り返す:
+    goukei = goukei + i
+表示する(goukei)</code></pre>
+<ol><li>i が1、2、3、4、5のとき、それぞれ足し算をした直後の goukei を書こう。</li><li>最初の goukei を10に変えると、最後に何が表示される？ 確かめる前に理由も書こう。</li></ol>
+<a class="button" href="lab.html#sum">ラボを開く　1からnの合計</a>
+<details><summary>答えと考え方</summary><p>1．1、3、6、10、15。2．25。足す数は同じで、出発点だけが10増える。</p></details>
+</div>
+<div class="task" id="task-multiples">
+<h3>挑戦問題　5の倍数だけ足す</h3>
+<p>1から20まで調べる。5で割った余りが0のときだけ足すと、どの数を足す？ 条件を「余りが0ではない」に変えると合計はいくつ？</p>
+<a class="button" href="lab.html#multiples">ラボを開く　倍数だけ合計</a>
+<details><summary>答えと考え方</summary><p>5、10、15、20を足すので50。条件を逆にすると、1から20までの合計210から50を引いて160。</p></details>
+</div>
+<p class="lesson-back"><a href="#lessons">授業一覧へ戻る</a></p>
+</section>
+<section id="lesson4">
+<p class="number">第4回　プログラミング</p>
+<h2>いちばん大きい値を、どこで見つけた？</h2>
+<div class="task" id="task-array">
+<h3>ウォームアップ　添字は0から</h3>
+<p>Data = [6, 3, 8, 4] のとき、Data[0] と Data[2] はいくつ？ i を0から3まで動かし、(i, Data[i]) を表示すると、どの順になる？</p>
+<a class="button" href="lab.html#array">ラボを開く　すべて表示</a>
+<details><summary>答えと考え方</summary><p>Data[0] は6、Data[2] は8。表示は (0, 6)、(1, 3)、(2, 8)、(3, 4) の順。</p></details>
+</div>
+<div class="task" id="task-max">
+<h3>基本問題　最大値と位置を覚えておく</h3>
+<pre><code>Data = [5, 9, 4, 12, 7]
+saidai = Data[0]
+ichi = 0
+i を 1 から 4 まで 1 ずつ増やしながら繰り返す:
+    もし Data[i] &gt; saidai ならば:
+        saidai = Data[i]
+        ichi = i
+表示する(saidai, ichi)</code></pre>
+<ol><li>i が1、2、3、4のとき、処理後の (saidai, ichi) を順に書こう。</li><li>最後に表示される値と、その値が配列の何番目にあるかを答えよう。</li></ol>
+<a class="button" href="lab.html#max">ラボを開く　最大値と位置</a>
+<details><summary>答えと考え方</summary><p>1．(9, 1)、(9, 1)、(12, 3)、(12, 3)。2．表示は (12, 3)。添字3は先頭から4番目。</p></details>
+</div>
+<div class="task" id="task-tie">
+<h3>挑戦問題　最大値が二つあったら？</h3>
+<p>Data = [9, 4, 9, 7] で、最大値と位置を調べる。「&gt;」で比べる場合と「&gt;=」で比べる場合、それぞれ最後の ichi はいくつ？ 違いが出る回を探そう。</p>
+<a class="button" href="lab.html#tie">ラボを開く　同じ最大値</a>
+<details><summary>答えと考え方</summary><p>「&gt;」なら0、「&gt;=」なら2。i が2のとき、同じ9を見て位置を更新するかどうかが違う。</p></details>
+</div>
+<div class="task">
+<h3>次は夏期講習で　何分待つ？</h3>
+<p>体験コーナーでは、1人につき4分かかる。開始から0分、4分、5分の時点で1人ずつ来た。前の人が終わり次第、次の人が始められる。3人目は何分待つ？ どの人の終了時刻を見ればいいだろう。</p>
+<details><summary>答えと考え方</summary><p>3分。2人目は開始から8分の時点で終わる。3人目は5分の時点に来て、8分の時点で始められる。</p></details>
+<p>夏は、来た人全員の待ち時間をプログラムで求める問題に進みます。</p>
+<p class="note">最後に、今日自分で追えた処理を一つと、夏にもう一度やってみたい問題を一つ、ノートに書いておこう。</p>
+</div>
+<p class="lesson-back"><a href="#lessons">授業一覧へ戻る</a></p>
+</section>
+</main>
+<footer>情報Ⅰ 冬期講習　全4回 <a href="teacher-guide.html">教員用進行表</a></footer>
+</body>
+</html>

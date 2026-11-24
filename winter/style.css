@@ -1,0 +1,15 @@
+:root{color-scheme:light;--ink:#172638;--muted:#516174;--paper:#f5f7fa;--blue:#1d536c;--line:#d6dfe8;--green:#315d52}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.75 system-ui,sans-serif;overflow-wrap:anywhere}
+header{background:#132c3d;color:white;padding:34px 22px}header div,main,footer{max-width:900px;margin:auto}header p,h1,h2,h3{margin:0}header p{color:#d8e9f1}h1{font-size:clamp(27px,5vw,44px);line-height:1.28;margin:7px 0 12px}h2{font-size:clamp(23px,4vw,31px);line-height:1.35}h3{font-size:19px;line-height:1.45}main{padding:20px 16px 40px}footer{padding:0 16px 28px;color:var(--muted)}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}nav a,.button{display:inline-block;padding:8px 12px;border:1px solid #aac0cb;border-radius:8px;background:white;font-weight:700;text-decoration:none}nav a:focus-visible,.button:focus-visible,summary:focus-visible{outline:3px solid #4e859e;outline-offset:2px}
+a{color:var(--blue);text-underline-offset:3px}section{scroll-margin-top:14px;margin:0 0 18px;padding:clamp(15px,4vw,30px);border:1px solid var(--line);border-radius:12px;background:white}.number{color:var(--green);font-size:14px;font-weight:750;margin:0 0 4px}.task{border-top:1px solid var(--line);margin-top:23px;padding-top:17px}.label{font-size:13px;letter-spacing:.035em;color:var(--muted)}p,ol,ul{margin:9px 0 13px}ol,ul{padding-left:1.5em}li+li{margin-top:5px}
+table{width:100%;border-collapse:collapse;margin:10px 0 15px;font-variant-numeric:tabular-nums}caption{text-align:left;font-weight:700}th,td{padding:7px 10px;border:1px solid var(--line);text-align:left}th{background:#edf3f6}details{padding:8px 12px;background:#eef4f2;border:1px solid #c6dcd4;border-radius:7px;margin-top:10px}summary{cursor:pointer;color:#234d42;font-weight:700;padding:3px 0}pre{overflow:auto;background:#eaf1f6;border-radius:8px;padding:12px;line-height:1.55;font-size:15px}.note{color:var(--muted);font-size:15px}.chart{display:block;width:min(100%,530px);height:auto;margin:8px 0}
+@media(max-width:650px){nav{grid-template-columns:repeat(2,1fr)}body{font-size:16px}th,td{padding:5px 6px}}
+@media print{body{background:white;font-size:10.5pt}header{background:white;color:#111;padding:0 0 12px}header p{color:#333}main,footer{padding:0}nav{display:none}section{border:0;padding:0;break-inside:avoid;page-break-inside:avoid}#guide section+section{break-before:page}a{color:#111}h1{font-size:24pt}h2{font-size:19pt}}
+
+.task{scroll-margin-top:12px}
+.lesson-back a{display:inline-block;padding:8px 0}
+@media (pointer:coarse){
+ nav a,.button,summary,.lesson-back a{min-height:44px}
+ summary{padding:9px 0}
+}
